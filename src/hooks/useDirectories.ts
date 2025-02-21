@@ -21,25 +21,26 @@ export default function useDirectories() {
     const entries: fs.Dirent[] = fs.readdirSync(preferences.projectsDirectoryPath, { withFileTypes: true });
 
     // Get first level directories
-    const dirs = await Promise.all(entries.map(async (entry) => {
-      const fullPath = join(preferences.projectsDirectoryPath, entry.name);
-      if (entry.isDirectory()) {
-
-        // if we have a single level of directories
-        if (preferences.projectsDirectoryLevels === "1") {
-          return entry.name;
-        } else if (preferences.projectsDirectoryLevels === "2") {
-          // Get second level directories
-          const subEntries = fs.readdirSync(fullPath, { withFileTypes: true });
-          const subDirs = subEntries.filter(subEntry => subEntry.isDirectory());
-          return subDirs.map(subEntry => join(entry.name, subEntry.name));
-        } else {
-          // Return error if the level is not supported
-          throw new Error("Unsupported directory levels");
+    const dirs = await Promise.all(
+      entries.map(async (entry) => {
+        const fullPath = join(preferences.projectsDirectoryPath, entry.name);
+        if (entry.isDirectory()) {
+          // if we have a single level of directories
+          if (preferences.projectsDirectoryLevels === "1") {
+            return entry.name;
+          } else if (preferences.projectsDirectoryLevels === "2") {
+            // Get second level directories
+            const subEntries = fs.readdirSync(fullPath, { withFileTypes: true });
+            const subDirs = subEntries.filter((subEntry) => subEntry.isDirectory());
+            return subDirs.map((subEntry) => join(entry.name, subEntry.name));
+          } else {
+            // Return error if the level is not supported
+            throw new Error("Unsupported directory levels");
+          }
         }
-      }
-      return [];
-    }));
+        return [];
+      }),
+    );
 
     // Flatten the array
     return dirs.flat();
@@ -52,11 +53,9 @@ export default function useDirectories() {
         const response = (await getDirectories()).join("\n");
         const result = response.split("\n").filter((line: string) => line.length > 0);
         setData(result);
-
       } catch (e: unknown) {
         assert(e instanceof Error);
-          setError(e as Error);
-
+        setError(e as Error);
       } finally {
         setIsLoading(false);
       }

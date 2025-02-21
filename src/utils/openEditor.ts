@@ -16,7 +16,7 @@ export function openInEditor(editor: string, path: string): void {
   let command = "";
   switch (editor) {
     case "code":
-      command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ") } "${fullPath}"`;
+      command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ")} "${fullPath}"`;
       break;
     case "vi":
       command = `${preferences.terminalEmulatorPath} -e ${preferences.sessionizerPath} ${path}`;
