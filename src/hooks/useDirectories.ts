@@ -2,6 +2,7 @@ import fs from "node:fs";
 import { join } from "node:path";
 import { useState, useEffect } from "react";
 import { getPreferenceValues } from "@raycast/api";
+import { assert } from "node:console";
 
 interface Preferences {
   projectsDirectoryPath: string;
@@ -52,8 +53,9 @@ export default function useDirectories() {
         const result = response.split("\n").filter((line: string) => line.length > 0);
         setData(result);
 
-      } catch (e: any) {
-        setError(e);
+      } catch (e: unknown) {
+        assert(e instanceof Error);
+          setError(e as Error);
 
       } finally {
         setIsLoading(false);

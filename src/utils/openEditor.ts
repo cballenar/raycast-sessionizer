@@ -1,9 +1,10 @@
 import { execSync } from "node:child_process";
-import { getPreferenceValues } from "@raycast/api";
+import { Application, getPreferenceValues } from "@raycast/api";
 import { join } from "node:path";
 
 interface Preferences {
   projectsDirectoryPath: string;
+  preferredEditor: Application;
   terminalEmulatorPath: string;
   sessionizerPath: string;
 }
@@ -15,7 +16,7 @@ export function openInEditor(editor: string, path: string): void {
   let command = "";
   switch (editor) {
     case "code":
-      command = `code ${fullPath}`;
+      command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ") } "${fullPath}"`;
       break;
     case "vi":
       command = `${preferences.terminalEmulatorPath} -e ${preferences.sessionizerPath} ${path}`;

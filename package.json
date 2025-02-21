@@ -12,34 +12,17 @@
   "commands": [
     {
       "name": "code",
-      "title": "VSCode Session",
-      "description": "Open project in VSCode.",
+      "title": "Code Session",
+      "description": "Open project in your preferred code editor.",
       "mode": "view",
-      "arguments": []
+      "preferences": []
     },
     {
       "name": "vi",
       "title": "VIM Session",
       "description": "Open project in VIM.",
       "mode": "view",
-      "preferences": [
-        {
-          "name": "terminalEmulatorPath",
-          "type": "file",
-          "default": "/opt/homebrew/bin/alacritty",
-          "title": "Terminal Emulator Path",
-          "description": "Path to your terminal emulator.",
-          "required": true
-        },
-        {
-          "name": "sessionizerPath",
-          "type": "file",
-          "default": "/Users/username/.local/bin/tmux-sessionizer",
-          "title": "Tmux Sessionizer Path",
-          "description": "Path to your tmux sessionizer script.",
-          "required": true
-        }
-      ]
+      "preferences": []
     }
   ],
   "preferences": [
@@ -66,6 +49,29 @@
       ],
       "title": "Projects Directory Levels",
       "description": "Number of levels in your projects directory structure. Useful if you group your projects in folders.",
+      "required": true
+    },
+    {
+      "name": "preferredEditor",
+      "type": "appPicker",
+      "default": "/Applications/Visual Studio Code.app",
+      "title": "Preferred Editor",
+      "description": "Path to your preferred editor.",
+      "required": true
+    },
+    {
+      "name": "terminalEmulatorPath",
+      "type": "file",
+      "default": "/opt/homebrew/bin/alacritty",
+      "title": "Terminal Emulator Path",
+      "description": "Path to your terminal emulator.",
+      "required": true
+    },
+    {
+      "name": "sessionizerPath",
+      "type": "file",
+      "title": "Tmux Sessionizer Path",
+      "description": "Path to your tmux sessionizer script.",
       "required": true
     }
   ],
