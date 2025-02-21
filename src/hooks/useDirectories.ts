@@ -5,6 +5,7 @@ import { getPreferenceValues } from "@raycast/api";
 
 interface Preferences {
   projectsDirectoryPath: string;
+  projectsDirectoryLevels: string;
 }
 
 const preferences = getPreferenceValues<Preferences>();
@@ -23,10 +24,18 @@ export default function useDirectories() {
       const fullPath = join(preferences.projectsDirectoryPath, entry.name);
       if (entry.isDirectory()) {
 
-        // Get second level directories
-        const subEntries = fs.readdirSync(fullPath, { withFileTypes: true });
-        const subDirs = subEntries.filter(subEntry => subEntry.isDirectory());
-        return subDirs.map(subEntry => join(entry.name, subEntry.name));
+        // if we have a single level of directories
+        if (preferences.projectsDirectoryLevels === "1") {
+          return entry.name;
+        } else if (preferences.projectsDirectoryLevels === "2") {
+          // Get second level directories
+          const subEntries = fs.readdirSync(fullPath, { withFileTypes: true });
+          const subDirs = subEntries.filter(subEntry => subEntry.isDirectory());
+          return subDirs.map(subEntry => join(entry.name, subEntry.name));
+        } else {
+          // Return error if the level is not supported
+          throw new Error("Unsupported directory levels");
+        }
       }
       return [];
     }));

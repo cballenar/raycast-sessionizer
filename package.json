@@ -42,6 +42,33 @@
       ]
     }
   ],
+  "preferences": [
+    {
+      "name": "projectsDirectoryPath",
+      "type": "directory",
+      "default": "/Users/username/Projects/",
+      "title": "Projects Directory Path",
+      "description": "Path to your projects directory.",
+      "required": true
+    },
+    {
+      "name": "projectsDirectoryLevels",
+      "type": "dropdown",
+      "data": [
+        {
+          "value": "1",
+          "title": "1 Level"
+        },
+        {
+          "value": "2",
+          "title": "2 Levels"
+        }
+      ],
+      "title": "Projects Directory Levels",
+      "description": "Number of levels in your projects directory structure. Useful if you group your projects in folders.",
+      "required": true
+    }
+  ],
   "dependencies": {
     "@raycast/api": "^1.91.2",
     "@raycast/utils": "^1.17.0"
@@ -61,15 +88,5 @@
     "lint": "ray lint",
     "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
     "publish": "npx @raycast/api@latest publish"
-  },
-  "preferences": [
-    {
-      "name": "projectsDirectoryPath",
-      "type": "directory",
-      "default": "/Users/username/Projects/",
-      "title": "Projects Directory Path",
-      "description": "Path to your projects directory.",
-      "required": true
-    }
-  ]
+  }
 }
