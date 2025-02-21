@@ -16,13 +16,6 @@
       "description": "Open project in your preferred code editor.",
       "mode": "view",
       "preferences": []
-    },
-    {
-      "name": "vi",
-      "title": "VIM Session",
-      "description": "Open project in VIM.",
-      "mode": "view",
-      "preferences": []
     }
   ],
   "preferences": [
@@ -57,21 +50,6 @@
       "default": "/Applications/Visual Studio Code.app",
       "title": "Preferred Editor",
       "description": "Path to your preferred editor.",
-      "required": true
-    },
-    {
-      "name": "terminalEmulatorPath",
-      "type": "file",
-      "default": "/opt/homebrew/bin/alacritty",
-      "title": "Terminal Emulator Path",
-      "description": "Path to your terminal emulator.",
-      "required": true
-    },
-    {
-      "name": "sessionizerPath",
-      "type": "file",
-      "title": "Tmux Sessionizer Path",
-      "description": "Path to your tmux sessionizer script.",
       "required": true
     }
   ],

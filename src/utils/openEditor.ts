@@ -18,9 +18,6 @@ export function openInEditor(editor: string, path: string): void {
     case "code":
       command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ")} "${fullPath}"`;
       break;
-    case "vi":
-      command = `${preferences.terminalEmulatorPath} -e ${preferences.sessionizerPath} ${path}`;
-      break;
     default:
       throw new Error("Missing or unsupported editor.");
   }
