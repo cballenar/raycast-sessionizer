@@ -1,4 +1,4 @@
-import { ActionPanel, Detail, List, Action, Icon, closeMainWindow, Application, showHUD } from "@raycast/api";
+import { ActionPanel, Detail, List, Action, Icon, Application, showHUD } from "@raycast/api";
 import useDirectories from "./hooks/useDirectories";
 import { openInEditor } from "./utils/openEditor";
 import { getPreferenceValues } from "@raycast/api";
@@ -35,7 +35,7 @@ export default function Command() {
                 title={`Open in ${preferences.preferredEditor.name}`}
                 onAction={async () => {
                   openInEditor("code", path);
-                  closeMainWindow();
+                  await showHUD("🚀 Project opened in Visual Studio Code.");
                 }}
               />
             </ActionPanel>
