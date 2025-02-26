@@ -14,6 +14,9 @@ interface Preferences {
 const preferences = getPreferenceValues<Preferences>();
 
 export function openInEditor(editor: string, path: string): void {
+  // Sanitize. Only allow alphanumeric, slashes, underscores and dashes.
+  path = path.replace(/[^a-zA-Z0-9/_-]/g, "");
+
   // Strip out any repeating, leading and trailing slashes
   path = path.replace(/\/+/g, "/").replace(/^\/|\/$/g, "");
 
