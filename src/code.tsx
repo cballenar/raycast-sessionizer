@@ -1,4 +1,4 @@
-import { ActionPanel, Detail, List, Action, Icon, Application, showHUD } from "@raycast/api";
+import { ActionPanel, Detail, List, Action, Icon, Application, showHUD, showToast, Toast } from "@raycast/api";
 import useDirectories from "./hooks/useDirectories";
 import { openInEditor } from "./utils/openEditor";
 import { getPreferenceValues } from "@raycast/api";
@@ -34,8 +34,16 @@ export default function Command() {
               <Action
                 title={`Open in ${preferences.preferredEditor.name}`}
                 onAction={async () => {
-                  openInEditor("code", path);
-                  await showHUD("🚀 Project opened in Visual Studio Code.");
+                  try {
+                    openInEditor("code", path);
+                    await showHUD("🚀 Project opened in Visual Studio Code.");
+                  } catch (error) {
+                    await showToast({
+                      style: Toast.Style.Failure,
+                      title: "Error",
+                      message: (error as Error).message
+                    });
+                  }
                 }}
               />
             </ActionPanel>
@@ -51,8 +59,16 @@ export default function Command() {
               <Action
                 title={`Create Project`}
                 onAction={async () => {
-                  openInEditor("code", input);
-                  await showHUD("✨ Project created and opened in Visual Studio Code.");
+                  try {
+                    openInEditor("code", input);
+                    await showHUD("✨ Project created and opened in Visual Studio Code.");
+                  } catch (error) {
+                    await showToast({
+                      style: Toast.Style.Failure,
+                      title: "Error",
+                      message: (error as Error).message
+                    });
+                  }
                 }}
               />
             </ActionPanel>
