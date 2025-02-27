@@ -13,19 +13,33 @@ interface Preferences {
 
 const preferences = getPreferenceValues<Preferences>();
 
-export function openInEditor(editor: string, path: string): void {
-  // Sanitize. Only allow alphanumeric, slashes, underscores and dashes.
-  path = path.replace(/[^a-zA-Z0-9/_-]/g, "");
+export type RelativePath = string;
 
-  // Strip out any repeating, leading and trailing slashes
-  path = path.replace(/\/+/g, "/").replace(/^\/|\/$/g, "");
+export function assertValidPath(path: RelativePath): asserts path is RelativePath {
+  const containsSpecialCharacters = /[^a-zA-Z0-9/_-]/g;
+  const containsRepeatingSlashes = /\/{2,}/g;
+  const containsLeadTrailingSlashes = /^\/|\/$/;
+  const containsSlashesMidString = /^.+\/.+?/;
 
+  if (containsSpecialCharacters.test(path)) {
+    throw new Error("The path contains special characters.");
+  }
+  if (containsRepeatingSlashes.test(path)) {
+    throw new Error("The path contains repeating slashes.");
+  }
+  if (containsLeadTrailingSlashes.test(path)) {
+    throw new Error("The path contains leading or trailing slashes.");
+  }
   // XOR if the path is valid relative to the projects directory levels.
   // This only works while the directory levels are 1 or 2.
-  const slashMidString = /^.+\/.+?/;
-  if ((preferences.projectsDirectoryLevels === "2") !== slashMidString.test(path) ) {
-    throw new Error("The path is not valid for the selected project directory levels.");
+  if ((preferences.projectsDirectoryLevels === "2") !== containsSlashesMidString.test(path) ) {
+    throw new Error("Level mismatch with the projects directory levels.");
   }
+}  
+
+export function openInEditor(editor: string, path: RelativePath): void {
+  // Use the assertion function.
+  assertValidPath(path);
 
   // Join the path with the projects directory path
   const fullPath = join(preferences.projectsDirectoryPath, path);
