@@ -32,10 +32,10 @@ export function assertValidPath(path: RelativePath): asserts path is RelativePat
   }
   // XOR if the path is valid relative to the projects directory levels.
   // This only works while the directory levels are 1 or 2.
-  if ((preferences.projectsDirectoryLevels === "2") !== containsSlashesMidString.test(path) ) {
+  if ((preferences.projectsDirectoryLevels === "2") !== containsSlashesMidString.test(path)) {
     throw new Error("Level mismatch with the projects directory levels.");
   }
-}  
+}
 
 export function openInEditor(editor: string, path: RelativePath): void {
   // Use the assertion function.

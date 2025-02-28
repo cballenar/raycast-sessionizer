@@ -41,7 +41,7 @@ export default function Command() {
                     await showToast({
                       style: Toast.Style.Failure,
                       title: "Error",
-                      message: (error as Error).message
+                      message: (error as Error).message,
                     });
                   }
                 }}
@@ -66,7 +66,7 @@ export default function Command() {
                     await showToast({
                       style: Toast.Style.Failure,
                       title: "Error",
-                      message: (error as Error).message
+                      message: (error as Error).message,
                     });
                   }
                 }}
