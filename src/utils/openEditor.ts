@@ -16,7 +16,7 @@ const preferences = getPreferenceValues<Preferences>();
 export type RelativePath = string;
 
 export function assertValidPath(path: RelativePath): asserts path is RelativePath {
-  const containsSpecialCharacters = /[^a-zA-Z0-9/_-]/g;
+  const containsSpecialCharacters = /[^a-zA-Z0-9./_-]/g;
   const containsRepeatingSlashes = /\/{2,}/g;
   const containsLeadTrailingSlashes = /^\/|\/$/;
   const containsSlashesMidString = /^.+\/.+?/;
