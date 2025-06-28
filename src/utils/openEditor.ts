@@ -52,8 +52,29 @@ export function openInEditor(editor: string, path: RelativePath): void {
 
   let command = "";
   switch (editor) {
-    case "code":
+    case "preferred":
       command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ")} "${fullPath}"`;
+      break;
+    case "vscode":
+      command = `code "${fullPath}"`;
+      break;
+    case "cursor":
+      command = `cursor "${fullPath}"`;
+      break;
+    case "vim":
+      command = `open -a Terminal.app && osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
+      break;
+    case "nvim":
+      command = `open -a Terminal.app && osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && nvim ."'`;
+      break;
+    case "sublime":
+      command = `subl "${fullPath}"`;
+      break;
+    case "atom":
+      command = `atom "${fullPath}"`;
+      break;
+    case "webstorm":
+      command = `open -a "WebStorm.app" "${fullPath}"`;
       break;
     default:
       throw new Error("Missing or unsupported editor.");

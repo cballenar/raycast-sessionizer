@@ -3,8 +3,14 @@
 Quick access to existing project directories in your preferred editor.
 
 ## Usage
-- Search for a project and open it in your preferred editor.
+- Search for a project and choose from multiple editors to open it with.
 - If the directory doesn't exist, create it and open it on the fly.
+- Switch between different editors on the fly for each project.
+
+## Features
+- **Multi-editor support**: Choose from multiple editors including VS Code, Cursor, Vim, Neovim, Sublime Text, WebStorm, and your configured preferred editor
+- **On-the-fly editor selection**: No need to configure a single editor - pick the right tool for each project
+- **Dynamic actions panel**: Each project shows all available editor options with appropriate icons
 
 ## Configure Extension
 

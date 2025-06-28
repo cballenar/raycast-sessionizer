@@ -1,14 +1,8 @@
-import { ActionPanel, Detail, List, Action, Icon, Application, showHUD, showToast, Toast } from "@raycast/api";
+import { ActionPanel, Detail, List, Action, Icon, showHUD, showToast, Toast } from "@raycast/api";
 import useDirectories from "./hooks/useDirectories";
 import { openInEditor } from "./utils/openEditor";
-import { getPreferenceValues } from "@raycast/api";
 import { useState } from "react";
-
-interface Preferences {
-  preferredEditor: Application;
-}
-
-const preferences = getPreferenceValues<Preferences>();
+import { AVAILABLE_EDITORS } from "./utils/editors";
 
 export default function Command() {
   const { data, isLoading, error } = useDirectories();
@@ -31,21 +25,25 @@ export default function Command() {
           title={path}
           actions={
             <ActionPanel>
-              <Action
-                title={`Open in ${preferences.preferredEditor.name}`}
-                onAction={async () => {
-                  try {
-                    openInEditor("code", path);
-                    await showHUD("🚀 Project opened in Visual Studio Code.");
-                  } catch (error) {
-                    await showToast({
-                      style: Toast.Style.Failure,
-                      title: "Error",
-                      message: (error as Error).message,
-                    });
-                  }
-                }}
-              />
+              {AVAILABLE_EDITORS.map((editor, editorIndex) => (
+                <Action
+                  key={editorIndex}
+                  title={`Open in ${editor.name}`}
+                  icon={editor.icon}
+                  onAction={async () => {
+                    try {
+                      openInEditor(editor.id, path);
+                      await showHUD(`🚀 Project opened in ${editor.name}.`);
+                    } catch (error) {
+                      await showToast({
+                        style: Toast.Style.Failure,
+                        title: "Error",
+                        message: (error as Error).message,
+                      });
+                    }
+                  }}
+                />
+              ))}
             </ActionPanel>
           }
         />
@@ -56,21 +54,25 @@ export default function Command() {
           icon={Icon.NewFolder}
           actions={
             <ActionPanel>
-              <Action
-                title={`Create Project`}
-                onAction={async () => {
-                  try {
-                    openInEditor("code", input);
-                    await showHUD("✨ Project created and opened in Visual Studio Code.");
-                  } catch (error) {
-                    await showToast({
-                      style: Toast.Style.Failure,
-                      title: "Error",
-                      message: (error as Error).message,
-                    });
-                  }
-                }}
-              />
+              {AVAILABLE_EDITORS.map((editor, editorIndex) => (
+                <Action
+                  key={editorIndex}
+                  title={`Create & Open in ${editor.name}`}
+                  icon={editor.icon}
+                  onAction={async () => {
+                    try {
+                      openInEditor(editor.id, input);
+                      await showHUD(`✨ Project created and opened in ${editor.name}.`);
+                    } catch (error) {
+                      await showToast({
+                        style: Toast.Style.Failure,
+                        title: "Error",
+                        message: (error as Error).message,
+                      });
+                    }
+                  }}
+                />
+              ))}
             </ActionPanel>
           }
         />
