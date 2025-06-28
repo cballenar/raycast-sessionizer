@@ -33,7 +33,7 @@ export function getAvailableEditors(): Editor[] {
     editors.push({
       id: preferences.preferredEditor,
       name: preferredDef.name,
-      icon: Icon.Star,
+      icon: preferredDef.icon,
     });
   }
 
@@ -44,7 +44,7 @@ export function getAvailableEditors(): Editor[] {
       editors.push({
         id: preferences.secondPreferredEditor,
         name: secondPreferredDef.name,
-        icon: Icon.Heart,
+        icon: secondPreferredDef.icon,
       });
     }
   }
