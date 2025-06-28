@@ -2,11 +2,12 @@ import { ActionPanel, Detail, List, Action, Icon, showHUD, showToast, Toast } fr
 import useDirectories from "./hooks/useDirectories";
 import { openInEditor } from "./utils/openEditor";
 import { useState } from "react";
-import { AVAILABLE_EDITORS } from "./utils/editors";
+import { getAvailableEditors } from "./utils/editors";
 
 export default function Command() {
   const { data, isLoading, error } = useDirectories();
   const [input, setInput] = useState<string>("");
+  const availableEditors = getAvailableEditors();
 
   if (isLoading) {
     return <List isLoading={true} />;
@@ -25,7 +26,7 @@ export default function Command() {
           title={path}
           actions={
             <ActionPanel>
-              {AVAILABLE_EDITORS.map((editor, editorIndex) => (
+              {availableEditors.map((editor, editorIndex) => (
                 <Action
                   key={editorIndex}
                   title={`Open in ${editor.name}`}
@@ -33,7 +34,11 @@ export default function Command() {
                   onAction={async () => {
                     try {
                       openInEditor(editor.id, path);
-                      await showHUD(`🚀 Project opened in ${editor.name}.`);
+                      if (editor.id === "finder") {
+                        await showHUD(`📁 Project opened in ${editor.name}.`);
+                      } else {
+                        await showHUD(`🚀 Project opened in ${editor.name}.`);
+                      }
                     } catch (error) {
                       await showToast({
                         style: Toast.Style.Failure,
@@ -54,25 +59,27 @@ export default function Command() {
           icon={Icon.NewFolder}
           actions={
             <ActionPanel>
-              {AVAILABLE_EDITORS.map((editor, editorIndex) => (
-                <Action
-                  key={editorIndex}
-                  title={`Create & Open in ${editor.name}`}
-                  icon={editor.icon}
-                  onAction={async () => {
-                    try {
-                      openInEditor(editor.id, input);
-                      await showHUD(`✨ Project created and opened in ${editor.name}.`);
-                    } catch (error) {
-                      await showToast({
-                        style: Toast.Style.Failure,
-                        title: "Error",
-                        message: (error as Error).message,
-                      });
-                    }
-                  }}
-                />
-              ))}
+              {availableEditors
+                .filter((editor) => editor.id !== "finder") // Don't show finder for creation
+                .map((editor, editorIndex) => (
+                  <Action
+                    key={editorIndex}
+                    title={`Create & Open in ${editor.name}`}
+                    icon={editor.icon}
+                    onAction={async () => {
+                      try {
+                        openInEditor(editor.id, input);
+                        await showHUD(`✨ Project created and opened in ${editor.name}.`);
+                      } catch (error) {
+                        await showToast({
+                          style: Toast.Style.Failure,
+                          title: "Error",
+                          message: (error as Error).message,
+                        });
+                      }
+                    }}
+                  />
+                ))}
             </ActionPanel>
           }
         />
