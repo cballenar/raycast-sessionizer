@@ -43,17 +43,13 @@ export function assertValidPath(path: RelativePath): asserts path is RelativePat
 function getEditorCommand(editor: string, fullPath: string): string {
   switch (editor) {
     case "vscode":
-      return `code "${fullPath}"`;
+      return `open -a "Visual Studio Code.app" "${fullPath}"`;
     case "cursor":
-      return `cursor "${fullPath}"`;
+      return `open -a "Cursor.app" "${fullPath}"`;
     case "vim":
-      return `open -a Terminal.app && osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
-    case "nvim":
-      return `open -a Terminal.app && osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && nvim ."'`;
+      return `osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
     case "sublime":
-      return `subl "${fullPath}"`;
-    case "atom":
-      return `atom "${fullPath}"`;
+      return `open -a "Sublime Text.app" "${fullPath}"`;
     case "webstorm":
       return `open -a "WebStorm.app" "${fullPath}"`;
     case "finder":
