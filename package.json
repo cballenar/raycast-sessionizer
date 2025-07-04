@@ -46,11 +46,81 @@
     },
     {
       "name": "preferredEditor",
-      "type": "appPicker",
-      "default": "/Applications/Visual Studio Code.app",
+      "type": "dropdown",
+      "data": [
+        {
+          "value": "vscode",
+          "title": "Visual Studio Code"
+        },
+        {
+          "value": "cursor",
+          "title": "Cursor"
+        },
+        {
+          "value": "vim",
+          "title": "Vim"
+        },
+        {
+          "value": "sublime",
+          "title": "Sublime Text"
+        },
+        {
+          "value": "webstorm",
+          "title": "WebStorm"
+        }
+      ],
+      "default": "vscode",
       "title": "Preferred Editor",
-      "description": "Path to your preferred editor.",
+      "description": "Your main code editor.",
       "required": true
+    },
+    {
+      "name": "secondPreferredEditor",
+      "type": "dropdown",
+      "data": [
+        {
+          "value": "",
+          "title": "None"
+        },
+        {
+          "value": "vscode",
+          "title": "Visual Studio Code"
+        },
+        {
+          "value": "cursor",
+          "title": "Cursor"
+        },
+        {
+          "value": "vim",
+          "title": "Vim"
+        },
+        {
+          "value": "sublime",
+          "title": "Sublime Text"
+        },
+        {
+          "value": "webstorm",
+          "title": "WebStorm"
+        }
+      ],
+      "default": "",
+      "title": "Second Preferred Editor",
+      "description": "Optional second editor for quick access.",
+      "required": false
+    },
+    {
+      "name": "customEditorName",
+      "type": "textfield",
+      "title": "Custom Editor Name",
+      "description": "Name of your custom editor (optional).",
+      "required": false
+    },
+    {
+      "name": "customEditorCommand",
+      "type": "textfield",
+      "title": "Custom Editor Command",
+      "description": "Command to launch your custom editor (e.g., 'my-editor'). Use $PATH for the project path.",
+      "required": false
     }
   ],
   "dependencies": {

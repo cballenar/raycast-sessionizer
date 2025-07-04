@@ -1,12 +1,15 @@
 import { execSync } from "node:child_process";
-import { Application, getPreferenceValues } from "@raycast/api";
+import { getPreferenceValues } from "@raycast/api";
 import { join } from "node:path";
 import { existsSync, lstatSync } from "node:fs";
 
 interface Preferences {
   projectsDirectoryLevels: string;
   projectsDirectoryPath: string;
-  preferredEditor: Application;
+  preferredEditor: string;
+  secondPreferredEditor?: string;
+  customEditorName?: string;
+  customEditorCommand?: string;
   terminalEmulatorPath: string;
   sessionizerPath: string;
 }
@@ -37,6 +40,30 @@ export function assertValidPath(path: RelativePath): asserts path is RelativePat
   }
 }
 
+function getEditorCommand(editor: string, fullPath: string): string {
+  switch (editor) {
+    case "vscode":
+      return `open -a "Visual Studio Code.app" "${fullPath}"`;
+    case "cursor":
+      return `open -a "Cursor.app" "${fullPath}"`;
+    case "vim":
+      return `osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
+    case "sublime":
+      return `open -a "Sublime Text.app" "${fullPath}"`;
+    case "webstorm":
+      return `open -a "WebStorm.app" "${fullPath}"`;
+    case "finder":
+      return `open "${fullPath}"`;
+    case "custom":
+      if (!preferences.customEditorCommand) {
+        throw new Error("Custom editor command not configured.");
+      }
+      return preferences.customEditorCommand.replace("$PATH", `${fullPath}`);
+    default:
+      throw new Error("Missing or unsupported editor.");
+  }
+}
+
 export function openInEditor(editor: string, path: RelativePath): void {
   // Use the assertion function.
   assertValidPath(path);
@@ -44,19 +71,15 @@ export function openInEditor(editor: string, path: RelativePath): void {
   // Join the path with the projects directory path
   const fullPath = join(preferences.projectsDirectoryPath, path);
 
-  // Check if path resolves to a directory, otherwise create it.
-  // If a matching file is found, a folder will still be created instead.
-  if (!existsSync(fullPath) || !lstatSync(fullPath).isDirectory()) {
-    execSync(`mkdir -p "${fullPath}"`);
+  // For finder, we don't need to create the directory
+  if (editor !== "finder") {
+    // Check if path resolves to a directory, otherwise create it.
+    // If a matching file is found, a folder will still be created instead.
+    if (!existsSync(fullPath) || !lstatSync(fullPath).isDirectory()) {
+      execSync(`mkdir -p "${fullPath}"`);
+    }
   }
 
-  let command = "";
-  switch (editor) {
-    case "code":
-      command = `open -a ${preferences.preferredEditor.path?.replace(/ /g, "\\ ")} "${fullPath}"`;
-      break;
-    default:
-      throw new Error("Missing or unsupported editor.");
-  }
+  const command = getEditorCommand(editor, fullPath);
   execSync(command);
 }
