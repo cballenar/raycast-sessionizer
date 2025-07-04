@@ -58,7 +58,7 @@ function getEditorCommand(editor: string, fullPath: string): string {
       if (!preferences.customEditorCommand) {
         throw new Error("Custom editor command not configured.");
       }
-      return preferences.customEditorCommand.replace("$PATH", `"${fullPath}"`);
+      return preferences.customEditorCommand.replace("$PATH", `${fullPath}`);
     default:
       throw new Error("Missing or unsupported editor.");
   }
