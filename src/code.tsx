@@ -1,4 +1,5 @@
 import { ActionPanel, Detail, List, Action, Icon, showHUD, showToast, Toast } from "@raycast/api";
+import { useFrecencySorting } from "@raycast/utils";
 import useDirectories from "./hooks/useDirectories";
 import { openInEditor } from "./utils/openEditor";
 import { useState } from "react";
@@ -6,6 +7,9 @@ import { getAvailableEditors } from "./utils/editors";
 
 export default function Command() {
   const { data, isLoading, error } = useDirectories();
+  const { data: sortedData, visitItem, resetRanking } = useFrecencySorting(data, {
+    key: (item: string) => item,
+  });
   const [input, setInput] = useState<string>("");
   const availableEditors = getAvailableEditors();
 
@@ -19,7 +23,7 @@ export default function Command() {
 
   return (
     <List filtering={true} onSearchTextChange={setInput}>
-      {data.map((path: string, index: number) => (
+      {sortedData.map((path: string, index: number) => (
         <List.Item
           key={index}
           icon={Icon.Folder}
@@ -33,6 +37,7 @@ export default function Command() {
                   icon={editor.icon}
                   onAction={async () => {
                     try {
+                      await visitItem(path);
                       openInEditor(editor.id, path);
                       if (editor.id === "finder") {
                         await showHUD(`📁 Project opened in ${editor.name}.`);
@@ -49,6 +54,23 @@ export default function Command() {
                   }}
                 />
               ))}
+              <Action
+                title="Reset Ranking"
+                icon={Icon.ArrowCounterClockwise}
+                onAction={async () => {
+                  try {
+                    await resetRanking(path);
+                    await showHUD("📊 Ranking reset for this project.");
+                  } catch (error) {
+                    await showToast({
+                      style: Toast.Style.Failure,
+                      title: "Error",
+                      message: (error as Error).message,
+                    });
+                  }
+                }}
+                shortcut={{ modifiers: ["cmd"], key: "r" }}
+              />
             </ActionPanel>
           }
         />
@@ -68,6 +90,7 @@ export default function Command() {
                     icon={editor.icon}
                     onAction={async () => {
                       try {
+                        await visitItem(input);
                         openInEditor(editor.id, input);
                         await showHUD(`✨ Project created and opened in ${editor.name}.`);
                       } catch (error) {
