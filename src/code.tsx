@@ -7,7 +7,11 @@ import { getAvailableEditors } from "./utils/editors";
 
 export default function Command() {
   const { data, isLoading, error } = useDirectories();
-  const { data: sortedData, visitItem, resetRanking } = useFrecencySorting(data, {
+  const {
+    data: sortedData,
+    visitItem,
+    resetRanking,
+  } = useFrecencySorting(data, {
     key: (item: string) => item,
   });
   const [input, setInput] = useState<string>("");
