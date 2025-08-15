@@ -121,6 +121,36 @@
       "title": "Custom Editor Command",
       "description": "Command to launch your custom editor (e.g., 'my-editor'). Use $PATH for the project path.",
       "required": false
+    },
+    {
+      "name": "minimumVisitThreshold",
+      "type": "dropdown",
+      "data": [
+        {
+          "value": "1",
+          "title": "1 visit (most sensitive)"
+        },
+        {
+          "value": "2", 
+          "title": "2 visits"
+        },
+        {
+          "value": "3",
+          "title": "3 visits (recommended)"
+        },
+        {
+          "value": "5",
+          "title": "5 visits"
+        },
+        {
+          "value": "10",
+          "title": "10 visits (least sensitive)"
+        }
+      ],
+      "default": "3",
+      "title": "Minimum Visit Threshold",
+      "description": "Projects must be accessed this many times before appearing in frecency-sorted results.",
+      "required": true
     }
   ],
   "dependencies": {
