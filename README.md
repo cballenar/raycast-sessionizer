@@ -16,6 +16,7 @@ Sessionizer allows you to customize:
 - **Preferred Editor** - Your main code editor, shown as the first option in the actions panel.
 - **Second Preferred Editor** - Optional second editor for quick access when you frequently switch between two editors.
 - **Custom Editor** - Configure a custom editor with its name and launch command. Use `$PATH` in the command to represent the project path.
+- **Minimum Visit Threshold** - Controls how many times a project must be accessed before appearing in frecency-sorted results. Set to 1 for most sensitive (original behavior), or higher values like 3-5 for less sensitive ranking. Default is 3 visits.
 - **Multi-editor support** - Each project shows actions for your preferred editors plus options to open in Finder for file browsing.
 
 ## Acknowledgements
