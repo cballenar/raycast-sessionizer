@@ -57,6 +57,10 @@
           "title": "Cursor"
         },
         {
+          "value": "zed",
+          "title": "Zed"
+        },
+        {
           "value": "vim",
           "title": "Vim"
         },
@@ -89,6 +93,10 @@
         {
           "value": "cursor",
           "title": "Cursor"
+        },
+        {
+          "value": "zed",
+          "title": "Zed"
         },
         {
           "value": "vim",

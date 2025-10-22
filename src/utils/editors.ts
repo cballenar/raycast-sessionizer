@@ -16,6 +16,7 @@ export interface Editor {
 const EDITOR_DEFINITIONS: Record<string, { name: string; icon: Icon }> = {
   vscode: { name: "Visual Studio Code", icon: Icon.Code },
   cursor: { name: "Cursor", icon: Icon.Code },
+  zed: { name: "Zed", icon: Icon.Code },
   vim: { name: "Vim", icon: Icon.Terminal },
   sublime: { name: "Sublime Text", icon: Icon.Text },
   webstorm: { name: "WebStorm", icon: Icon.Code },

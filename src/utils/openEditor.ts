@@ -46,6 +46,8 @@ function getEditorCommand(editor: string, fullPath: string): string {
       return `open -a "Visual Studio Code.app" "${fullPath}"`;
     case "cursor":
       return `open -a "Cursor.app" "${fullPath}"`;
+    case "zed":
+      return `open -a "Zed.app" "${fullPath}"`;
     case "vim":
       return `osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
     case "sublime":
