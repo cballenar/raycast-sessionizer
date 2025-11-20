@@ -42,20 +42,22 @@ export function assertValidPath(path: RelativePath): asserts path is RelativePat
 
 function getEditorCommand(editor: string, fullPath: string): string {
   switch (editor) {
-    case "vscode":
-      return `open -a "Visual Studio Code.app" "${fullPath}"`;
+    case "antigravity":
+      return `open -a "Antigravity.app" "${fullPath}"`;
     case "cursor":
       return `open -a "Cursor.app" "${fullPath}"`;
-    case "zed":
-      return `open -a "Zed.app" "${fullPath}"`;
-    case "vim":
-      return `osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
-    case "sublime":
-      return `open -a "Sublime Text.app" "${fullPath}"`;
-    case "webstorm":
-      return `open -a "WebStorm.app" "${fullPath}"`;
     case "finder":
       return `open "${fullPath}"`;
+    case "sublime":
+      return `open -a "Sublime Text.app" "${fullPath}"`;
+    case "vim":
+      return `osascript -e 'tell application "Terminal" to do script "cd \\"${fullPath}\\" && vim ."'`;
+    case "vscode":
+      return `open -a "Visual Studio Code.app" "${fullPath}"`;
+    case "webstorm":
+      return `open -a "WebStorm.app" "${fullPath}"`;
+    case "zed":
+      return `open -a "Zed.app" "${fullPath}"`;
     case "custom":
       if (!preferences.customEditorCommand) {
         throw new Error("Custom editor command not configured.");

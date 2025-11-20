@@ -14,12 +14,13 @@ export interface Editor {
 }
 
 const EDITOR_DEFINITIONS: Record<string, { name: string; icon: Icon }> = {
-  vscode: { name: "Visual Studio Code", icon: Icon.Code },
+  antigravity: { name: "Antigravity", icon: Icon.Code },
   cursor: { name: "Cursor", icon: Icon.Code },
-  zed: { name: "Zed", icon: Icon.Code },
-  vim: { name: "Vim", icon: Icon.Terminal },
   sublime: { name: "Sublime Text", icon: Icon.Text },
+  vim: { name: "Vim", icon: Icon.Terminal },
+  vscode: { name: "Visual Studio Code", icon: Icon.Code },
   webstorm: { name: "WebStorm", icon: Icon.Code },
+  zed: { name: "Zed", icon: Icon.Code },
 };
 
 export function getAvailableEditors(): Editor[] {
