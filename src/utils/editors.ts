@@ -14,7 +14,7 @@ export interface Editor {
 }
 
 const EDITOR_DEFINITIONS: Record<string, { name: string; icon: Icon }> = {
-  antigravity: { name: "Antigravity", icon: Icon.Code },
+  "antigravity-ide": { name: "Antigravity IDE", icon: Icon.Code },
   cursor: { name: "Cursor", icon: Icon.Code },
   sublime: { name: "Sublime Text", icon: Icon.Text },
   vim: { name: "Vim", icon: Icon.Terminal },

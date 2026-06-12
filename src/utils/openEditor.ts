@@ -42,8 +42,8 @@ export function assertValidPath(path: RelativePath): asserts path is RelativePat
 
 function getEditorCommand(editor: string, fullPath: string): string {
   switch (editor) {
-    case "antigravity":
-      return `open -a "Antigravity.app" "${fullPath}"`;
+    case "antigravity-ide":
+      return `open -a "Antigravity IDE.app" "${fullPath}"`;
     case "cursor":
       return `open -a "Cursor.app" "${fullPath}"`;
     case "finder":
