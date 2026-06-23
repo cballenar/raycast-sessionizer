@@ -1,13 +1,13 @@
 import { ActionPanel, Detail, List, Action, Icon, showHUD, showToast, Toast } from "@raycast/api";
-import { useFrecencySorting } from "@raycast/utils";
 import useDirectories from "./hooks/useDirectories";
+import useFilteredFrecency from "./hooks/useFilteredFrecency";
 import { openInEditor } from "./utils/openEditor";
 import { useState } from "react";
 import { getAvailableEditors } from "./utils/editors";
 
 export default function Command() {
   const { data, isLoading, error } = useDirectories();
-  const { data: sortedData, visitItem, resetRanking } = useFrecencySorting(data, {
+  const { data: sortedData, visitItem, resetRanking } = useFilteredFrecency(data, {
     key: (item: string) => item,
   });
   const [input, setInput] = useState<string>("");
